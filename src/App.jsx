@@ -3,6 +3,7 @@ import reactLogo from './assets/react.svg'
 import viteLogo from '/vite.svg'
 import './App.css'
 import WeatherCard from './components/WeatherCard'
+import toast, { Toaster } from 'react-hot-toast'
 
 const API_KEY = import.meta.env.VITE_WEATHER_API_KEY
 
@@ -11,7 +12,7 @@ function App() {
   const [city, setCity] = useState("")
   const [loading, setLoading] = useState(false)
   const [weather, setWeather] = useState(null)
-  const [error, setError] = useState("")
+
 
 
   const handleSearch = (e) => {
@@ -29,7 +30,7 @@ function App() {
       const data = await res.json()
 
       if (data.cod !== 200) {
-        setError(data.message);
+        toast.error("City not found")
         setWeather(null);
       } else {
         setWeather(
@@ -47,7 +48,7 @@ function App() {
     } catch (error) {
       console.error("Error in fetch api" + error)
 
-    }finally{
+    } finally {
       setLoading(false);
     }
   }
@@ -55,6 +56,7 @@ function App() {
 
   return (
     <>
+      <Toaster position='top-center' />
       <div className={`max-h-screen w-11/12 mx-auto bg-gradient-to-b from-blue-500 to-indigo-700 flex flex-col items-center justify-center p-6`}>
         <h1 className='text-3xl font-bold text-white mt-10 mb-6'>
           🌦 Weather Pro
@@ -70,7 +72,7 @@ function App() {
             {loading ? "loading" : "Search"}
           </button>
         </form>
-        {weather && <WeatherCard weather={weather}/>}
+        {weather && <WeatherCard weather={weather} />}
       </div>
     </>
   )
