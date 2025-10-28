@@ -4,30 +4,28 @@ import viteLogo from '/vite.svg'
 import './App.css'
 
 function App() {
-  const [count, setCount] = useState(0)
+
+  const [city, setCity] = useState(null)
+  const [loading, setLoading] = useState(false)
 
   return (
     <>
-      <div>
-        <a href="https://vite.dev" target="_blank">
-          <img src={viteLogo} className="logo" alt="Vite logo" />
-        </a>
-        <a href="https://react.dev" target="_blank">
-          <img src={reactLogo} className="logo react" alt="React logo" />
-        </a>
+      <div className={`max-h-screen w-11/12 mx-auto bg-gradient-to-b from-blue-500 to-indigo-700 flex flex-col items-center justify-center p-6`}>
+        <h1 className='text-3xl font-bold text-white mt-10 mb-6'>
+          🌦 Weather Pro
+        </h1>
+        <form className='flex gap-3'>
+          <input
+            type="text"
+            placeholder='Enter city...'
+            value={city}
+            onChange={e => setCity(e.target.value)}
+            className='px-4 border border-gray-500 rounded-md text-gray-700' />
+            <button>
+              {loading? "loading":"Search"}
+            </button>
+        </form>
       </div>
-      <h1>Vite + React</h1>
-      <div className="card">
-        <button onClick={() => setCount((count) => count + 1)}>
-          count is {count}
-        </button>
-        <p>
-          Edit <code>src/App.jsx</code> and save to test HMR
-        </p>
-      </div>
-      <p className="read-the-docs">
-        Click on the Vite and React logos to learn more
-      </p>
     </>
   )
 }
