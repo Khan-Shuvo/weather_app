@@ -2,6 +2,7 @@ import { useState } from 'react'
 import reactLogo from './assets/react.svg'
 import viteLogo from '/vite.svg'
 import './App.css'
+import WeatherCard from './components/WeatherCard'
 
 const API_KEY = import.meta.env.VITE_WEATHER_API_KEY
 
@@ -26,9 +27,8 @@ function App() {
       const res = await fetch(`https://api.openweathermap.org/data/2.5/weather?q=${city}&appid=${API_KEY}&units=metric`)
 
       const data = await res.json()
-      console.log(data)
 
-      if (data.code !== 200) {
+      if (data.cod !== 200) {
         setError(data.message);
         setWeather(null);
       } else {
@@ -52,6 +52,7 @@ function App() {
     }
   }
 
+
   return (
     <>
       <div className={`max-h-screen w-11/12 mx-auto bg-gradient-to-b from-blue-500 to-indigo-700 flex flex-col items-center justify-center p-6`}>
@@ -69,6 +70,7 @@ function App() {
             {loading ? "loading" : "Search"}
           </button>
         </form>
+        {weather && <WeatherCard weather={weather}/>}
       </div>
     </>
   )
