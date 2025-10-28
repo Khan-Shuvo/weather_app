@@ -3,14 +3,53 @@ import reactLogo from './assets/react.svg'
 import viteLogo from '/vite.svg'
 import './App.css'
 
+const API_KEY = import.meta.env.VITE_WEATHER_API_KEY
+
 function App() {
 
-  const [city, setCity] = useState(null)
+  const [city, setCity] = useState("")
   const [loading, setLoading] = useState(false)
+  const [weather, setWeather] = useState(null)
+  const [error, setError] = useState("")
 
 
-  const handleSearch = () =>{
+  const handleSearch = (e) => {
+    e.preventDefault();
     fetchWeather()
+  }
+
+  const fetchWeather = async () => {
+    if (!city) return setWeather(null);
+    setLoading(true);
+
+    try {
+      const res = await fetch(`https://api.openweathermap.org/data/2.5/weather?q=${city}&appid=${API_KEY}&units=metric`)
+
+      const data = await res.json()
+      console.log(data)
+
+      if (data.code !== 200) {
+        setError(data.message);
+        setWeather(null);
+      } else {
+        setWeather(
+          {
+            city: data.name,
+            conditions: data.weather[0].main,
+            icon: `https://openweathermap.org/img/wn/${data.weather[0].icon}@2x.png`,
+            temp: Math.round(data.main.temp),
+            humidity: data.main.humidity,
+            wind: data.wind.speed
+          }
+        );
+      }
+
+    } catch (error) {
+      console.error("Error in fetch api" + error)
+
+    }finally{
+      setLoading(false);
+    }
   }
 
   return (
@@ -26,9 +65,9 @@ function App() {
             value={city}
             onChange={e => setCity(e.target.value)}
             className='px-4 border border-gray-500 rounded-md text-gray-700' />
-            <button type='submit'>
-              {loading? "loading":"Search"}
-            </button>
+          <button type='submit'>
+            {loading ? "loading" : "Search"}
+          </button>
         </form>
       </div>
     </>
