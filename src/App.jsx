@@ -78,7 +78,10 @@ function App() {
             onChange={e => setCity(e.target.value)}
             className='px-4 border border-gray-500 rounded-md text-gray-700' />
           <button type='submit'>
-            {loading ? "loading" : "Search"}
+            {loading ?
+             <div className='animate-spin h-5 w-5 border-2 border-blue-600 border-t-transparent rounded-full'>
+             </div>:
+            "Search"}
           </button>
         </form>
         {weather && <WeatherCard weather={weather} />}
