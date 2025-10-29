@@ -53,11 +53,20 @@ function App() {
     }
   }
 
+  const getBackground = (condition) => {
+    switch (condition) {
+      case "Clear": return "from-yellow-400 to-orange-500";
+      case "Rain": return "from-gray-500 to-blue-700";
+      case "Clouds": return "from-gray-300 to-gray-600";
+      default: return "from-blue-500 to-indigo-700"
+    }
+  }
+
 
   return (
     <>
       <Toaster position='top-center' />
-      <div className={`max-h-screen w-11/12 mx-auto bg-gradient-to-b from-blue-500 to-indigo-700 flex flex-col items-center justify-center p-6`}>
+      <div className={`max-h-screen w-11/12 mx-auto bg-gradient-to-b ${weather ? getBackground(weather.conditions) : "from-blue-500 to-indigo-700"} flex flex-col items-center justify-center p-6`}>
         <h1 className='text-3xl font-bold text-white mt-10 mb-6'>
           🌦 Weather Pro
         </h1>
