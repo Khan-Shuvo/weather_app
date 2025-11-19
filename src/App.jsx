@@ -89,7 +89,7 @@ function App() {
     <>
       <Toaster position="top-center" />
       <div
-        className={`w-full max-h-screen bg-gradient-to-b 
+        className={`w-full max-h-screen bg-gradient-to-b rounded
         ${weather ? getBackground(weather.conditions) : "from-blue-500 to-indigo-700"} 
         flex flex-col justify-start items-center p-4 overflow-auto`}
       >
